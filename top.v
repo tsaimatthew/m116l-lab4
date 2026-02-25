@@ -16,9 +16,9 @@ module topModule (
     wire [3:0] pin2;
     wire [3:0] pin3;
 
-    reg [15:0] storedPin = 16'b0100001100100001; //initial pin is 1234
+    reg [15:0] storedPin = 16'b0100001100100001; //initial pin is 4321
 
-    wire status = 0; //0=locked, 1=unlocked, 2=adjustment mode?
+    wire status; //0=locked, 1=unlocked, 2=adjustment mode?
 
     clockDivider u1(
         .clk(clk),
@@ -34,6 +34,7 @@ module topModule (
         .JC_cols(JC_cols),
         .userPin(userPin),
         .validPin(validPin),
+        .status(status),
 
         .pin0(pin0),
         .pin1(pin1),
@@ -52,15 +53,12 @@ module topModule (
         .status(status)
     );
 
-endmodule
+    pinVerify u4(
+        .clk_500Hz(clk_500Hz),
+        .storedPin(storedPin),
+        .userPin(userPin),
+        .validPin(validPin),
+        .status(status)
+    );
 
-// module buttonDebounce(
-//     input wire btnR,
-//     input wire clk_2Hz,
-//     output reg btnRDb,
-//     output reg btnRPressed
-// );
-//     always @(posedge clk_2Hz) begin
-//         btnRDb <= btnR;
-//     end
-// endmodule
+endmodule
