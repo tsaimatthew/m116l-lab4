@@ -16,9 +16,9 @@ module topModule (
     wire [3:0] pin2;
     wire [3:0] pin3;
 
-    reg [15:0] storedPin = 15'b0100001100100001; //initial pin is 1234
+    reg [15:0] storedPin = 16'b0100001100100001; //initial pin is 1234
 
-    wire lockedStatus = 0; //0=locked, 1=unlocked, 2=adjustment mode?
+    wire status = 0; //0=locked, 1=unlocked, 2=adjustment mode?
 
     clockDivider u1(
         .clk(clk),

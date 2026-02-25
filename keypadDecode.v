@@ -15,39 +15,34 @@ module keypadDecode(
     reg [3:0] currentPin [0:3];
     reg [3:0] currentInput;
     reg [2:0] inputCtr = 0;
-    reg keyPressed = 0;
     reg keyPressedPrev = 0;
-    reg [7:0] JC = 0;
     reg [1:0] rowSel = 0;
+    reg [15:0] debounce_timer = 0;
+    reg stable_keyPressed = 0;
 
     always @(posedge clk_500Hz) begin
-        rowSel <= rowSel + 1;
-        case(rowSel)
-            2'b00: JC_rows <= 4'b1110;
-            2'b01: JC_rows <= 4'b1101;
-            2'b10: JC_rows <= 4'b1011;
-            2'b11: JC_rows <= 4'b0111;
-        endcase
-        case (JC)
-            8'b11100111: currentInput = 4'b0000; // 0
-            8'b11101110: currentInput = 4'b0001; // 1
-            8'b11011110: currentInput = 4'b0010; // 2
-            8'b10111110: currentInput = 4'b0011; // 3
-            8'b11101101: currentInput = 4'b0100; // 4
-            8'b11011101: currentInput = 4'b0101; // 5
-            8'b10111101: currentInput = 4'b0110; // 6
-            8'b11101011: currentInput = 4'b0111; // 7
-            8'b11011011: currentInput = 4'b1000; // 8
-            8'b10111011: currentInput = 4'b1001; // 9
 
-            8'b01111011: currentInput = 4'b1010; // C
-            8'b10110111: currentInput = 4'b1011; // E
-            8'b01110111: currentInput = 4'b1100; // D          
-            default: currentInput = currentInput;
-        endcase
-        keyPressed <= (JC != 8'b11111111) ? 1 : 0;
+        if (JC_cols != 4'b1111) begin
+            if (debounce_timer < 20) begin
+                debounce_timer <= debounce_timer + 1;
+                stable_keyPressed <= 0;
+            end else
+                stable_keyPressed <= 1;
+        end else begin
+            debounce_timer <= 0;
+            stable_keyPressed <= 0;
 
-        if (keyPressed && !keyPressedPrev) begin
+            //increment row scanning
+            rowSel <= rowSel + 1;
+            case(rowSel)
+                2'b00: JC_rows <= 4'b1110;
+                2'b01: JC_rows <= 4'b1101;
+                2'b10: JC_rows <= 4'b1011;
+                2'b11: JC_rows <= 4'b0111;
+            endcase
+        end
+        keyPressedPrev <= stable_keyPressed;
+        if (stable_keyPressed && !keyPressedPrev) begin
             if (currentInput < 4'b1010) begin
                 //if not CED
                 if (inputCtr < 4) begin
@@ -60,6 +55,11 @@ module keypadDecode(
                 //clear: reset input
                 inputCtr <= 0;
                 validPin <= 0;
+                pin0 <= 15;
+                pin1 <= 15;
+                pin2 <= 15;
+                pin3 <= 15;
+
             end
             else if (currentInput == 4'b1011 && inputCtr >= 4) begin
                 //enter: valid length pin
@@ -73,8 +73,6 @@ module keypadDecode(
             validPin <= 0;
         end
 
-        keyPressedPrev <= keyPressed;
-
         //current input. Numbers not typed in are set to 15
         pin0 <= (inputCtr >= 1) ? currentPin[0] : 15;
         pin1 <= (inputCtr >= 2) ? currentPin[1] : 15;
@@ -82,7 +80,22 @@ module keypadDecode(
         pin3 <= (inputCtr >= 4) ? currentPin[3] : 15;
     end
     always @(*) begin
-        JC = {JC_rows, JC_cols};
-    end 
-    
+        case ({JC_rows, JC_cols})
+            8'b11100111: currentInput <= 4'b0000; // 0
+            8'b11101110: currentInput <= 4'b0001; // 1
+            8'b11011110: currentInput <= 4'b0010; // 2
+            8'b10111110: currentInput <= 4'b0011; // 3
+            8'b11101101: currentInput <= 4'b0100; // 4
+            8'b11011101: currentInput <= 4'b0101; // 5
+            8'b10111101: currentInput <= 4'b0110; // 6
+            8'b11101011: currentInput <= 4'b0111; // 7
+            8'b11011011: currentInput <= 4'b1000; // 8
+            8'b10111011: currentInput <= 4'b1001; // 9
+
+            8'b01111011: currentInput <= 4'b1010; // C
+            8'b10110111: currentInput <= 4'b1011; // E
+            8'b01110111: currentInput <= 4'b1100; // D          
+            default: currentInput <= 4'b1111;
+        endcase
+    end
 endmodule
