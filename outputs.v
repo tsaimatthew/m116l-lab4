@@ -15,7 +15,7 @@ module outputs(
     output reg [3:0] an,
     output reg [6:0] seg
 );
-    reg [2:0] lastAckStatus = 2'b111; //init 7 (invalid). Last status acknowledged to ensure tones only play once
+    reg [2:0] lastAckStatus = 3'b111; //init 7 (invalid). Last status acknowledged to ensure tones only play once
     reg [4:0] LED_display = 0; //current number being displayed on selected an
     reg [1:0] LEDActivationCtr = 0; //cycle an0 to an3
 
@@ -27,7 +27,7 @@ module outputs(
                 if (pin0 != 15) //show inputted pin
                     LED_display <= pin0;
                 else //else show LOCD
-                    LED_display <= 5'b01010
+                    LED_display <= 5'b01010;
             end else if (status == 1) begin //open
                 LED_display <= 0;
             end
@@ -53,7 +53,7 @@ module outputs(
                 else if (pin0 != 15) //show dash if pin not fully inputted
                     LED_display <= 5'b01111;
                 else //else show LOCD
-                    LED_display <= 5'b01010;
+                    LED_display <= 5'b10000;
             end else if (status == 1) begin //open
                 LED_display <= 5'b01101;
             end
@@ -96,7 +96,7 @@ module outputs(
             5'b01001: seg = 7'b0000100; // "9" 
 
             5'b01010: seg = 7'b1110001; // L
-            5'b01010: seg = 7'b0110001; // C
+            5'b10000: seg = 7'b0110001; // C
             5'b01011: seg = 7'b1000010; // d
             5'b01100: seg = 7'b0011000; // P
             5'b01101: seg = 7'b0110000; // E

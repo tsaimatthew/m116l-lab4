@@ -8,13 +8,13 @@ module topModule (
 );
     wire clk_500Hz;
     wire [15:0] userPin;
-    wire validPin,
+    wire validPin;
     wire [3:0] pin0;
     wire [3:0] pin1;
     wire [3:0] pin2;
     wire [3:0] pin3;
 
-    reg [15:0] storedPin = 15'b0100001100100001 //initial pin is 1234
+    reg [15:0] storedPin = 15'b0100001100100001; //initial pin is 1234
 
     wire lockedStatus = 0; //0=locked, 1=unlocked, 2=adjustment mode?
 
@@ -38,14 +38,15 @@ module topModule (
         .pin3(pin3)
     );
 
-    timer u2(
-        .clk_2Hz(clk_2Hz),
+    outputs u3(
+        .pin0(pin0),
+        .pin1(pin1),
+        .pin2(pin2),
+        .pin3(pin3),
         .clk_500Hz(clk_500Hz),
         .an(an),
         .seg(seg),
-        .btnR(btnR),
-        .btnL(btnL),
-        .sw(sw)
+        .status(status)
     );
 
 endmodule
