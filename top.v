@@ -2,7 +2,9 @@ module topModule (
     input clk,
     input btnR,
     input [1:0] sw,
-    input [7:0] JC,
+    input [3:0] JC_cols,
+
+    output [3:0] JC_rows,
     output [3:0] an,
     output [6:0] seg
 );
@@ -28,7 +30,8 @@ module topModule (
 
     keypadDecode u2(
         .clk_500Hz(clk_500Hz),
-        .JC(JC),
+        .JC_rows(JC_rows),
+        .JC_cols(JC_cols),
         .userPin(userPin),
         .validPin(validPin),
 

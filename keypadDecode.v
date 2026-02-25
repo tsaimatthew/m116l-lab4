@@ -1,6 +1,7 @@
 module keypadDecode(
     input wire clk_500Hz,
-    input wire [7:0] JC,
+    input wire [3:0] JC_cols,
+    output reg [3:0] JC_rows,
     output reg [15:0] userPin,
     output reg validPin,
 
@@ -16,8 +17,17 @@ module keypadDecode(
     reg [2:0] inputCtr = 0;
     reg keyPressed = 0;
     reg keyPressedPrev = 0;
+    reg [7:0] JC = 0;
+    reg [1:0] rowSel = 0;
 
     always @(posedge clk_500Hz) begin
+        rowSel <= rowSel + 1;
+        case(rowSel)
+            2'b00: JC_rows <= 4'b1110;
+            2'b01: JC_rows <= 4'b1101;
+            2'b10: JC_rows <= 4'b1011;
+            2'b11: JC_rows <= 4'b0111;
+        endcase
         case (JC)
             8'b11100111: currentInput = 4'b0000; // 0
             8'b11101110: currentInput = 4'b0001; // 1
@@ -71,4 +81,8 @@ module keypadDecode(
         pin2 <= (inputCtr >= 3) ? currentPin[2] : 15;
         pin3 <= (inputCtr >= 4) ? currentPin[3] : 15;
     end
+    always @(*) begin
+        JC = {JC_rows, JC_cols};
+    end 
+    
 endmodule
