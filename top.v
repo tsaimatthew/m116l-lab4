@@ -22,7 +22,7 @@ module topModule (
     wire [3:0] pin2;
     wire [3:0] pin3;
 
-    reg [15:0] storedPin = 16'b0100001100100001;
+    wire [15:0] storedPin;
 
     wire [1:0] status; //0=locked, 1=unlocked, 2=adjustment mode
     wire success_event;
@@ -77,7 +77,7 @@ module topModule (
         .btnL(btnL),
         .status(status),
         .success_event(success_event),
-        .fail_event(fail_event)
+        .fail_event(fail_event),
         .sw(sw)
     );
 
@@ -111,10 +111,11 @@ module topModule (
     );
 
     adjustment u5(
+        .status(status),
         .clk_500Hz(clk_500Hz),
         .userPin(userPin),
-        .validPin(validPin)
-
+        .validPin(validPin),
+        .storedPin(storedPin)
     );
 
 endmodule

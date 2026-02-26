@@ -84,20 +84,19 @@ module keypadDecode(
 
     always @(*) begin
         case ({JC_rows, JC_cols})
-            8'b11100111: currentInput = 4'b0000;
-            8'b11101110: currentInput = 4'b0001;
-            8'b11011110: currentInput = 4'b0010;
-            8'b10111110: currentInput = 4'b0011;
-            8'b11101101: currentInput = 4'b0100;
-            8'b11011101: currentInput = 4'b0101;
-            8'b10111101: currentInput = 4'b0110;
-            8'b11101011: currentInput = 4'b0111;
-            8'b11011011: currentInput = 4'b1000;
-            8'b10111011: currentInput = 4'b1001;
-
-            8'b01111011: currentInput = 4'b1010;
-            8'b10110111: currentInput = 4'b1011;
-            8'b01110111: currentInput = 4'b1100;
+            8'b11100111: currentInput = 4'b0000; // 0
+            8'b11101110: currentInput = 4'b0001; // 1
+            8'b11011110: currentInput = 4'b0010; // 2
+            8'b10111110: currentInput = 4'b0011; // 3
+            8'b11101101: currentInput = 4'b0100; // 4
+            8'b11011101: currentInput = 4'b0101; // 5
+            8'b10111101: currentInput = 4'b0110; // 6
+            8'b11101011: currentInput = 4'b0111; // 7
+            8'b11011011: currentInput = 4'b1000; // 8
+            8'b10111011: currentInput = 4'b1001; // 9
+            8'b01111011: currentInput = 4'b1010; // C
+            8'b10110111: currentInput = 4'b1011; // E
+            8'b01110111: currentInput = 4'b1100; // D
             default:     currentInput = 4'b1111;
         endcase
     end

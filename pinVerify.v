@@ -4,9 +4,7 @@ module pinVerify(
     input wire [15:0] userPin,
     input wire validPin,
     input wire [1:0] sw,
-    input btnR,
-
-    output reg status
+    input btnL,
 
     output reg status,
     output reg success_event,
@@ -22,7 +20,7 @@ module pinVerify(
             //in adjustment mode
             status <= 2;
         end
-        rst_debounce_reg <= {rst_debounce_reg[2:0], btnR};
+        rst_debounce_reg <= {rst_debounce_reg[2:0], btnL};
         if (rst_debounce_reg == 4'b1111)
             clean_rst <= 1;
         else if (rst_debounce_reg == 4'b0000)
