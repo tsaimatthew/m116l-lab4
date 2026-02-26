@@ -3,6 +3,7 @@ module topModule (
     input btnR,
     input [1:0] sw,
     input [3:0] JC_cols,
+    input btnR,
 
     output [3:0] JC_rows,
     output [3:0] an,
@@ -35,6 +36,7 @@ module topModule (
         .userPin(userPin),
         .validPin(validPin),
         .status(status),
+        .btnR(btnR),
 
         .pin0(pin0),
         .pin1(pin1),
