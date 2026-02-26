@@ -66,6 +66,6 @@ module topModule (
         .clk_500Hz(clk_500Hz),
         .userPin(userPin),
         .validPin(validPin)
-    )
+    );
 
 endmodule
