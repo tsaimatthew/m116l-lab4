@@ -22,7 +22,8 @@ module keypadDecode(
     reg stable_keyPressed = 0;
 
     always @(posedge clk_500Hz) begin
-        if (status == 0) begin
+        if (status != 1) begin
+            //keypad is only operational when locked or in adjustment
             if (JC_cols != 4'b1111) begin
                 if (debounce_timer < 20) begin
                     debounce_timer <= debounce_timer + 1;

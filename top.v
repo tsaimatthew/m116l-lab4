@@ -1,8 +1,9 @@
 module topModule (
-    input  wire clk,
-    input  wire btnR,
-    input  wire [1:0] sw,
-    input  wire [3:0] JC_cols,
+    input clk,
+    input btnL,
+    input [1:0] sw,
+    input [3:0] JC_cols,
+    input btnR,
 
     output wire [3:0] JC_rows,
     output wire [3:0] an,
@@ -23,7 +24,7 @@ module topModule (
 
     reg [15:0] storedPin = 16'b0100001100100001;
 
-    wire status;
+    wire [1:0] status; //0=locked, 1=unlocked, 2=adjustment mode
     wire success_event;
     wire fail_event;
 
@@ -73,10 +74,11 @@ module topModule (
         .storedPin(storedPin),
         .userPin(userPin),
         .validPin(validPin),
-        .btnR(btnR),
+        .btnL(btnL),
         .status(status),
         .success_event(success_event),
         .fail_event(fail_event)
+        .sw(sw)
     );
 
     always @(posedge clk) begin
@@ -106,6 +108,13 @@ module topModule (
         .play(play),
         .ok_not_fail(ok_not_fail),
         .audio_out(audio_out)
+    );
+
+    adjustment u5(
+        .clk_500Hz(clk_500Hz),
+        .userPin(userPin),
+        .validPin(validPin)
+
     );
 
 endmodule
