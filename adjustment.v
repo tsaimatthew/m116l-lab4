@@ -8,15 +8,8 @@ module adjustment(
 );
     reg reset;
     always @(posedge clk_500Hz) begin
-        if (reset)
-            storedPin = 16'b0100001100100001; //initial pin is 4321
         if (status == 2 && validPin) begin
             storedPin <= userPin;
         end
-    end
-
-    initial begin
-        reset = 1;
-        #10 reset = 0;
     end
 endmodule
