@@ -10,7 +10,7 @@ module outputs(
     input wire [3:0] pin2,
     input wire [3:0] pin3,
 
-    input wire status,
+    input wire [1:0] status,
 
     output reg [3:0] an,
     output reg [6:0] seg

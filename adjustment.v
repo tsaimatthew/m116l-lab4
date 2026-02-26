@@ -4,19 +4,10 @@ module adjustment(
     input wire [15:0] userPin,
     input wire validPin,
 
-    output reg [15:0] storedPin
+    output reg [15:0] storedPin = 16'b0100001100100001  // initial pin 4321
 );
-    reg reset;
     always @(posedge clk_500Hz) begin
-        if (reset)
-            storedPin = 16'b0100001100100001; //initial pin is 4321
-        if (status == 2 && validPin) begin
+        if (status == 2 && validPin)
             storedPin <= userPin;
-        end
-    end
-
-    initial begin
-        reset = 1;
-        #10 reset = 0;
     end
 endmodule

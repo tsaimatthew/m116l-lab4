@@ -6,7 +6,7 @@ module pinVerify(
     input wire [1:0] sw,
     input btnL,
 
-    output reg status,
+    output reg [1:0] status,
     output reg success_event,
     output reg fail_event
 );
