@@ -85,7 +85,8 @@ module keypadDecode(
             pin2 <= (inputCtr >= 3) ? currentPin[2] : 15;
             pin3 <= (inputCtr >= 4) ? currentPin[3] : 15;
         end
-        always @(*) begin
+    end
+    always @(*) begin
             case ({JC_rows, JC_cols})
                 8'b11100111: currentInput = 4'b0000; // 0
                 8'b11101110: currentInput = 4'b0001; // 1
@@ -104,5 +105,4 @@ module keypadDecode(
                 default: currentInput = 4'b1111;
             endcase
         end
-    end
 endmodule

@@ -28,7 +28,7 @@ module outputs(
                     LED_display <= pin0;
                 else //else show LOCD
                     LED_display <= 5'b01010;
-            end else if (status == 1) begin //open
+            end else if (status == 1 || status == 2) begin //open
                 LED_display <= 0;
             end
         end
@@ -41,7 +41,7 @@ module outputs(
                     LED_display <= 5'b01111;
                 else //else show LOCD
                     LED_display <= 0;
-            end else if (status == 1) begin //open
+            end else if (status == 1 || status == 2) begin //open
                 LED_display <= 5'b01100;
             end
         end
@@ -54,7 +54,7 @@ module outputs(
                     LED_display <= 5'b01111;
                 else //else show LOCD
                     LED_display <= 5'b10000;
-            end else if (status == 1) begin //open
+            end else if (status == 1 || status == 2) begin //open
                 LED_display <= 5'b01101;
             end
         end
@@ -68,7 +68,7 @@ module outputs(
                     LED_display <= 5'b01111;
                 else //else show LOCD
                     LED_display <= 5'b01011;
-            end else if (status == 1) begin //open
+            end else if (status == 1 || status == 2) begin //open
                 LED_display <= 5'b01110;
             end
         end

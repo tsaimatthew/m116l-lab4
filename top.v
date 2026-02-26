@@ -63,6 +63,7 @@ module topModule (
     );
 
     adjustment u5(
+        .status(status),
         .clk_500Hz(clk_500Hz),
         .userPin(userPin),
         .validPin(validPin)
