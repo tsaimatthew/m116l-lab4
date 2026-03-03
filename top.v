@@ -9,6 +9,9 @@ module topModule (
     output [3:0] an,
     output [6:0] seg
 );
+    wire clk_1Hz;
+    wire clk_2Hz;
+    wire clk_1Hz2;
     wire clk_500Hz;
     wire [15:0] userPin;
     wire validPin;
@@ -18,6 +21,7 @@ module topModule (
     wire [3:0] pin3;
 
     wire [1:0] status; //0=locked, 1=unlocked, 2=adjustment mode
+    wire [15:0] storedPin;
 
     clockDivider u1(
         .clk(clk),
@@ -66,7 +70,8 @@ module topModule (
         .status(status),
         .clk_500Hz(clk_500Hz),
         .userPin(userPin),
-        .validPin(validPin)
+        .validPin(validPin),
+        .storedPin(storedPin)
     );
 
 endmodule
