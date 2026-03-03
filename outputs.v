@@ -23,7 +23,7 @@ module outputs(
         case (LEDActivationCtr)
         2'b00: begin
             an <= 4'b0111;
-            if (!status) begin //locked
+            if (status == 2'b00) begin //locked
                 if (pin0 != 15) //show inputted pin
                     LED_display <= pin0;
                 else //else show LOCD
@@ -34,7 +34,7 @@ module outputs(
         end
         2'b01: begin
             an <= 4'b1011;
-            if (!status) begin //locked
+            if (status == 2'b00) begin //locked
                 if (pin1 != 15) //show inputted pin
                     LED_display <= pin1;
                 else if (pin0 != 15) //show dash if pin not fully inputted
@@ -47,7 +47,7 @@ module outputs(
         end
         2'b10: begin
             an <= 4'b1101;
-            if (!status) begin //locked
+            if (status == 2'b00) begin //locked
                 if (pin2 != 15) //show inputted pin
                     LED_display <= pin2;
                 else if (pin0 != 15) //show dash if pin not fully inputted
@@ -61,7 +61,7 @@ module outputs(
         2'b11: begin
 
             an <= 4'b1110;
-            if (!status) begin //locked
+            if (status == 2'b00) begin //locked
                 if (pin3 != 15) //show inputted pin
                     LED_display <= pin3;
                 else if (pin0 != 15) //show dash if pin not fully inputted
