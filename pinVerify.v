@@ -6,8 +6,7 @@ module pinVerify(
     input wire [1:0] sw,
     input btnL,
 
-    output reg status
-
+    output reg [1:0] status
 );
     reg [3:0] rst_debounce_reg = 0;
     reg clean_rst = 0;

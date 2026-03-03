@@ -1,7 +1,7 @@
 module keypadDecode(
     input wire clk_500Hz,
     input wire [3:0] JC_cols,
-    input wire status,
+    input wire [1:0] status,
     output reg [3:0] JC_rows,
     output reg [15:0] userPin,
     output reg validPin,
