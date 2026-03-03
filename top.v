@@ -51,6 +51,7 @@ module topModule (
         .pin2(pin2),
         .pin3(pin3),
         .clk_500Hz(clk_500Hz),
+        .validPin(validPin),
         .an(an),
         .seg(seg),
         .status(status)
