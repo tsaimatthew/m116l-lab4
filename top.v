@@ -65,7 +65,7 @@ module topModule (
     pinVerify u4(
         .clk_400Hz(clk_400Hz),
         .clk_1kHz(clk_1kHz),
-        .audio_out(audio_out)
+        .audio_out(audio_out),
         .clk_500Hz(clk_500Hz),
         .storedPin(storedPin),
         .userPin(userPin),
