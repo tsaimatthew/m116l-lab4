@@ -27,7 +27,7 @@ module topModule (
 
     //tie shutdown to hi to prevent floating pin, gain to gnd for 6db gain
     assign audio_shutdown = 1'b1;
-    assign audio_gain = 1'b0;
+    assign audio_gain = 1'b1;
 
     clockDivider u1(
         .clk(clk),
