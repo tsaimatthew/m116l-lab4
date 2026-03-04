@@ -12,7 +12,7 @@ module topModule (
     output [3:0] an,
     output [6:0] seg
 );
-    wire clk_400Hz;
+    wire clk_1kHz;
     wire clk_500Hz;
     wire clk_500Hz;
     wire [15:0] userPin;
@@ -26,8 +26,8 @@ module topModule (
     wire [15:0] storedPin;
 
     //tie shutdown to hi to prevent floating pin, gain to gnd for 6db gain
-    audio_shutdown = 1;
-    audio_gain = 0;
+    assign audio_shutdown = 1'b1;
+    assign audio_gain = 1'b0;
 
     clockDivider u1(
         .clk(clk),
