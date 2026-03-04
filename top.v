@@ -5,13 +5,15 @@ module topModule (
     input [3:0] JC_cols,
     input btnR,
 
+    output audio_gain,
+    output audio_shutdown,
+    output audio_out,
     output [3:0] JC_rows,
     output [3:0] an,
     output [6:0] seg
 );
-    wire clk_1Hz;
-    wire clk_2Hz;
-    wire clk_1Hz2;
+    wire clk_400Hz;
+    wire clk_500Hz;
     wire clk_500Hz;
     wire [15:0] userPin;
     wire validPin;
@@ -23,11 +25,14 @@ module topModule (
     wire [1:0] status; //0=locked, 1=unlocked, 2=adjustment mode
     wire [15:0] storedPin;
 
+    //tie shutdown to hi to prevent floating pin, gain to gnd for 6db gain
+    audio_shutdown = 1;
+    audio_gain = 0;
+
     clockDivider u1(
         .clk(clk),
-        .clk_1Hz(clk_1Hz),
-        .clk_2Hz(clk_2Hz),
-        .clk_1Hz2(clk_1Hz2),
+        .clk_1kHz(clk_1kHz),
+        .clk_400Hz(clk_400Hz),
         .clk_500Hz(clk_500Hz)
     );
 
@@ -56,8 +61,11 @@ module topModule (
         .seg(seg),
         .status(status)
     );
-
+    
     pinVerify u4(
+        .clk_400Hz(clk_400Hz),
+        .clk_1kHz(clk_1kHz),
+        .audio_out(audio_out)
         .clk_500Hz(clk_500Hz),
         .storedPin(storedPin),
         .userPin(userPin),
