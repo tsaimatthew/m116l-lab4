@@ -10,13 +10,6 @@ module clockDivider (
 
 
     always @(posedge clk) begin
-        //1 Hz timer for tone length
-        if (ctr_1Hz >= 49999999) begin
-            clk_1Hz <= ~clk_1Hz;
-            ctr_1Hz <= 0;
-        end else begin
-            ctr_1Hz <= ctr_1Hz + 1;
-        end
         //1kHz clock for tone
         if(ctr_1kHz >= 49999) begin
             clk_1kHz <= ~clk_1kHz;
